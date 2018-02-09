@@ -33,7 +33,7 @@ import java.util.logging.Logger;
  *     2、读取文件统计结果，采用java nio优化，提高效率
  *     3、采用MinHeap维护topk, 优化HashMap的排序算法效率
  */
-public class Wordcount {
+public class WordCount {
 
     private static final int ThreadNum = 5;
 
@@ -41,7 +41,7 @@ public class Wordcount {
 
     private static String path = null; //default:/User/Document/ (also can be referred)
 
-    public static final Logger log = Logger.getLogger(Wordcount.class.getSimpleName());
+    public static final Logger log = Logger.getLogger(WordCount.class.getSimpleName());
 
     public static void main(String[] args) {
 
