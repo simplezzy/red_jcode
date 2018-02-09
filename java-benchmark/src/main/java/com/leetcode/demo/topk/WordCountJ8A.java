@@ -4,28 +4,29 @@ import javax.swing.filechooser.FileSystemView;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.time.Clock;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 /**
- * Created by zhiyu.zhou on 2018/2/9
+ * Created by zhiyu.zhou on 2018/2/9.
  */
 
 /**
- * 思想：利用java fork&&join 机制，通过parallel Stream实现
- * 条件：Java8环境
+ * reduce 优化
  */
-public class WordCountJ8 {
+public class WordCountJ8A {
 
     private static final Integer ThreadNum = 5;
 
     private static final Integer TOP_K = 10;
+
+    private static final String EMPTY_STRING = "";
 
     public static final Logger log = Logger.getLogger(WordCountJ8.class.getSimpleName());
 
@@ -38,6 +39,7 @@ public class WordCountJ8 {
         Optional<File[]> targetFileArr = Optional.ofNullable(FileSystemView.getFileSystemView().getDefaultDirectory()
                 .listFiles(pathname -> pathname.getName().endsWith(".txt")));
 
+        ConcurrentMap<String, Long> map = new ConcurrentHashMap<>();
         Arrays.stream(targetFileArr.orElse(new File[0])) // file stream
                 //parallel
                 .parallel()
@@ -53,8 +55,13 @@ public class WordCountJ8 {
                 // get word by splitting ','
                 .flatMap(line -> Arrays.stream(line.split(",")))
                 // groupBy and the result: Map<String, Long>
-                .collect(Collectors.groupingByConcurrent(word -> word, Collectors.counting()))
-                .entrySet().stream()
+                //
+                .reduce(EMPTY_STRING, (pWord, word) -> {
+                    map.merge(word, 1L, (ov, nv) -> ov + nv);
+                    return EMPTY_STRING;
+                });
+
+         map.entrySet().stream()
                 .parallel()
                 //sort
                 .sorted(Map.Entry.comparingByValue((v1, v2) -> (int) (v2 - v1)))
