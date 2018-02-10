@@ -1,4 +1,4 @@
-package com.redcat.demo;
+package com.leetcode.demo.sortfind;
 
 /**
  * Created by zhiyu.zhou on 2018/2/1.
