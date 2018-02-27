@@ -43,7 +43,7 @@ public class BinaryTree {
         list.add(root);
         TreeNode curNode = null;
         while (!list.isEmpty()) {
-            curNode = list.poll();  //去除节点并删除
+            curNode = list.poll();  //获取节点并删除
             System.out.println(curNode.value);
             if(null != curNode.left) {
                 list.add(curNode.left);
