@@ -8,6 +8,7 @@ import java.lang.annotation.*;
 
 /**
  * redisLock redis分布式锁 AOP
+ * call: @RedisLocked(key = "'lock:bcr:submit:'+#scheduleId", value = "当前方案有其他人正在进行提交操作，请稍后再试", isWait = false)
  */
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
@@ -27,4 +28,7 @@ public @interface RedisLocked {
 
     //重试间隔时长
     long sleeptime() default 100;
+
+    //获取失败，是继续等还是放弃
+    boolean isWait() default true;
 }

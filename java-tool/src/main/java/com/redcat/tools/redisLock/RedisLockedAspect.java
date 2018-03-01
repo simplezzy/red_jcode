@@ -9,7 +9,7 @@ public class RedisLockedAspect {
 
     // 切点：controller包中任意类下包含注解RedisLocked的方法被调用时
 
-    private boolean lock(String redisKey, long timeout, long expire, long sleeptime) {
+    private boolean lock(String redisKey, long timeout, long expire, long sleeptime, boolean isWait) {
 
         long now = System.currentTimeMillis();
         try {
@@ -29,8 +29,12 @@ public class RedisLockedAspect {
                     //get lock
                     return true;
                 }
-                //wait and retry
-                Thread.sleep(sleeptime);
+                if(isWait) {
+                    //wait and retry
+                    Thread.sleep(sleeptime);
+                } else {
+                    return false;
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
