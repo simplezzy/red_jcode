@@ -1,0 +1,25 @@
+https://github.com/alibaba/transmittable-thread-local
+
+解决异步执行时上下文ThreadLocal值传递的问题
+   JDK的InheritableThreadLocal类可以完成父线程到子线程的值传递
+     但对于使用线程池等会缓存线程的组件的情况，这时父子线程关系的ThreadLocal值传递已经没有意义，实际上是把 任务提交给线程池时的ThreadLocal值传递到任务执行时
+     TransmittableThreadLocal类继承并加强InheritableThreadLocal类，解决上述的问题；
+     整个库包含TTL核心功能、线程池修饰及Agent支持
+
+需求场景
+   1、分布式跟踪系统
+      分布式跟踪系统作为基础设施，不会限制『使用线程池等会缓存线程的组件』，并期望对业务逻辑尽可能的透明
+   2、应用容器或上层框架跨应用代码给下层SDK传递信息
+      在App Engine（PAAS）上会运行由应用提供商提供的应用（SAAS模式）
+   3、日志收集记录系统的上下文
+      由于不限制用户应用使用线程池，系统的上下文需要能跨线程的传递，且不影响应用代码。
+
+
+使用：
+   使用类TransmittableThreadLocal来保存值，并跨线程池传递。
+   TransmittableThreadLocal继承InheritableThreadLocal
+      相比InheritableThreadLocal，添加了
+      protected方法copy
+      用于定制 任务提交给线程池时的ThreadLocal值传递到 任务执行时时的拷贝行为，缺省传递的是引用。
+      protected方法beforeExecute/afterExecute
+      执行任务(Runnable/Callable)的前/后的生命周期回调，缺省是空操作。
