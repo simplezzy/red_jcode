@@ -42,15 +42,19 @@ public class missingNumber {
                 return 0;
             }
             boolean[] mark = new boolean[size + 1];
+            for(int i = 0; i < mark.length; i++) {
+                mark[i] = false;
+            }
             for(int i = 0; i < size; i++) {
                 mark[nums[i]] = true;
             }
-            for(int i = 0; i < mark.length; i++) {
+            int i = 0;
+            for( ; i < mark.length; i++) {
                 if(!mark[i]) {
                     return i;
                 }
             }
-            return -1;
+            return i;
         }
 
         /**
