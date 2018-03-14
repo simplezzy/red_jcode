@@ -5,7 +5,7 @@ package com.leetcode.demo.findKth;
  */
 public class FindKthNum {
     /**
-     * 分治 + 二分查找  O(lg(m + n))
+     * 分治 + 二分查找  O(lg(m + n))  注意数据有序的条件
      * @param nums1
      * @param nums2
      * @return
