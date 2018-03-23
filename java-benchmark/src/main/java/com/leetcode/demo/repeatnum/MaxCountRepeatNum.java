@@ -27,14 +27,14 @@ public class MaxCountRepeatNum {
                 if(nums[i] == nums[j]) {
                     ++count;
                 }
-                if(maxCount < count) {
-                    maxCount = count;
-                    maxNum = nums[i];
-                }
+                continue;
+            }
+            if(maxCount < count) {
+                maxCount = count;
+                maxNum = nums[i];
             }
             i = j;
         }
-
         map.put(maxNum, maxCount);
         return map;
     }
