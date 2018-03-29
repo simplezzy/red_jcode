@@ -1,4 +1,4 @@
-package com.redcode.demo.hConcurrent;
+package com.redcode.demo.javauc;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

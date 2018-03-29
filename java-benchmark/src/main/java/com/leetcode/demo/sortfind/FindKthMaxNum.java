@@ -6,7 +6,7 @@ package com.leetcode.demo.sortfind;
 
 /**
  * Q:在N个乱序的数组中找第K大的数
- * S: 利用快排的思想，从数组arr中随机找出一个元素X，把数组分成两部分arr_a和arr_b。 O(n)
+ * S: 利用分治快排的思想，从数组arr中随机找出一个元素X，把数组分成两部分arr_a和arr_b。 O(n)
  *    arr_a中的元素比x大，arr_b中的元素比x小。
  *    1.arr_a中的元素小于K，则arr_b中第k-arr_a.length个元素即为第K大数。
       2.arr_a中的元素大于等于K，则返回arr_a中第K大数

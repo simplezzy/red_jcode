@@ -1,4 +1,4 @@
-package com.redcode.demo.hConcurrent;
+package com.redcode.demo.javauc;
 
 import java.net.ServerSocket;
 import java.net.Socket;
