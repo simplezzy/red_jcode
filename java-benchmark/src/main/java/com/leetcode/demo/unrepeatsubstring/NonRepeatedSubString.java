@@ -14,7 +14,6 @@ public class NonRepeatedSubString {
         if(null == str) {
             return null;
         }
-
         char[] charArray = str.toCharArray();
         int[] map = new int[256];
         for(int i = 0; i < 256; i++) {
